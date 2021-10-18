@@ -1,0 +1,31 @@
+.cartcont {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 40px;
+  }
+  
+  .cartnumber {
+    color:black;
+    font-weight: bold;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:  rgb(238, 88, 88);
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+  }
+  
+  span{
+  text-decoration: none;
+  }
+  
+  button{
+    background-color:teal;
+    border-radius: 20px;
+  }
+  
+  
