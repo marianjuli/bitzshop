@@ -96,7 +96,7 @@ const Footer = () => {
         <Logo>BITZ</Logo>
         <Desc>
           Tienda online donde encontraras la mejor ropa importada y al mejor
-          precio.
+          precio
         </Desc>
         <SocialContainer>
           <SocialIcon color="3B5999">

@@ -9,9 +9,9 @@ export default function CartWidget() {
 
   return (
     <div className="cartcont">
-      <button>
-        <img src="/assets/cart.svg" alt="cart" />
-      </button>
+      <div className="cartdiv">
+        <img src="/assets/cart.png" alt="cart" />
+      </div>
       <span className="cartnumber">{getQuantity()}</span>
     </div>
   );

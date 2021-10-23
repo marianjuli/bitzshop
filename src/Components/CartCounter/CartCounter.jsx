@@ -2,6 +2,9 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import CartContext from "../../context/CartContext";
 
+
+
+
 export default function CartCounter({ inicialValue, product }) {
     const [contador, setContador] = useState(0);
     const {handleQuantity } = useContext(CartContext);

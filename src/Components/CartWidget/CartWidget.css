@@ -17,6 +17,7 @@
     height: 20px;
     width: 20px;
     border-radius: 50%;
+    text-decoration: none;
   }
   
   span{
@@ -25,7 +26,12 @@
   
   button{
     background-color:teal;
-    border-radius: 20px;
+    border-radius: 10px;
+    
   }
   
+
+  .cartdiv{
+    border-radius: 5px;
+  }
   

@@ -13,15 +13,16 @@ import {
 } from 'firebase/firestore'
 
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCXGA_UYOCR0mJmcuE5l85RGC_BmG438oA",
-  authDomain: "bitz-project.firebaseapp.com",
-  projectId: "bitz-project",
-  storageBucket: "bitz-project.appspot.com",
-  messagingSenderId: "335902526930",
-  appId: "1:335902526930:web:7d76bbecb0060abad80c0b"
-}
 
+const firebaseConfig = {
+    apiKey: process.env.REACT_APP_apiKey,
+    authDomain: process.env.REACT_APP_authDomain,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId
+  }
+  
 const app = firebase.initializeApp(firebaseConfig)
 
 export const db = getFirestore(app)
@@ -97,7 +98,7 @@ export const createOrder = (objOrder) => {
         })
 
         if(outOfStock.length === 0) {
-            addDoc(collection(db, 'orders'), objOrder).then(() => {
+            addDoc(collection(db, 'Orders'), objOrder).then(() => {
                 batch.commit().then(() => {
                     resolve('La orden se ejecutó con éxito')
                 })

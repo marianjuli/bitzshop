@@ -2,13 +2,16 @@ import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
+import UserContext from "../../context/UserContext"
+import NotificationContext from "../../context/NotificationContext"
 import CartWidget from "../CartWidget/CartWidget";
 import CartContext from "../../context/CartContext";
 import { getCategories } from "../../services/firebase/firebase";
 
 export default function Navbar() {
-  const [categories, setCategories] = useState();
-
+  const {setCategories} = useState();
+ const {setNotification} = useContext(NotificationContext);
+ const { user, logout } = useContext(UserContext)
   const { getQuantity } = useContext(CartContext);
 
   useEffect(() => {
@@ -22,7 +25,17 @@ export default function Navbar() {
     return () => {
       setCategories();
     };
-  }, []);
+  }, [setCategories]);
+
+
+
+  const handleLogout = () => {
+    logout()
+    setNotification('error', `Hasta luego ${user}`)
+  }
+
+
+
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,45 +48,74 @@ export default function Navbar() {
       </div>
 
       <ul className="navbar-nav">
-        <li className="nav-item active">
-          <Link to="/" className="nav-link">
-            Productos <span className="sr-only">(current)</span>
-          </Link>
-        </li>
+
         <li className="nav-item">
+          <NavLink to="/" 
+          className="nav-link"
+            activeClassName="NavLink"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "darkcyan",
+            }}
+            >
+            Productos 
+          </NavLink>
+        </li>
+
+        <li className="nav-item active">
           <NavLink
             to={`/category/mujer`}
             className="nav-link"
             activeClassName="NavLink"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "darkcyan",
+            }}
           >
             Mujer
           </NavLink>
         </li>
-        <li className="nav-item">
+
+        <li className="nav-item active">
           <NavLink
             to={`/category/hombre`}
             className="nav-link"
             activeClassName="NavLink"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "darkcyan",
+            }}
+
+
+
           >
             Hombre
           </NavLink>
         </li>
-        <li className="nav-item">
+
+        <li className="nav-item active">
           <NavLink
             to={`/category/niño`}
             className="nav-link"
             activeClassName="NavLink"
+            activeStyle={{
+              fontWeight: "bold",
+              color: "darkcyan",
+            }}
           >
             Niño
           </NavLink>
         </li>
 
-        <li className="nav-item">
-          <div className="nav-link">
-            <Link to="/login">
-              <label id="login">Login</label>
-            </Link>
-          </div>
+        <li className="nav-item-login">
+         
+        {
+          user 
+            ? <button className="loginButton" onClick={handleLogout}>Logout</button>
+            : <Link to='/login'><button>Login</button></Link>
+        }
+           
+         
         </li>
 
         <div className="nav-cart">

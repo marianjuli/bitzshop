@@ -1,5 +1,4 @@
 import React from "react";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import Announcement from "../Announcement/Announcement";
 import { mobile } from "../../responsive";
@@ -12,8 +11,9 @@ import { createOrder } from "../../services/firebase/firebase";
 import { useHistory } from "react-router";
 import { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import ItemList from "../ItemList/ItemList";
 
-import ItemList from "../ItemList/ItemList"
+
 
 
 const Container = styled.div``;
@@ -52,8 +52,8 @@ const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0px 120px;
-  font-weight:bold;
-  font-size: 20px
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 const Bottom = styled.div`
@@ -100,8 +100,7 @@ const ProductColor = styled.div`
 `;
 
 const ProductSize = styled.span`
-padding-top:30px;
-
+  padding-top: 30px;
 `;
 
 const PriceDetail = styled.div`
@@ -141,7 +140,8 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 450px;
+  margin-top: 10px;
+  margin-bottom: 650px;
   height: 50vh;
 `;
 
@@ -169,14 +169,13 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
-
 const ButtonRemove = styled.button`
   width: 45%;
   padding: 10px;
   background-color: black;
   color: white;
   font-weight: 400;
-  margin-left:20px
+  margin-left: 20px;
 `;
 
 const Cart = () => {
@@ -186,7 +185,7 @@ const Cart = () => {
     address: "",
     comment: "",
   });
-  const { products, getQuantity, handleQuantity, deleteProduct, emptyCart, calculateTotal } =
+  const { products, deleteProduct, emptyCart, calculateTotal } =
     useContext(CartContext);
 
   const { user } = useContext(UserContext);
@@ -200,7 +199,6 @@ const Cart = () => {
     const objOrder = {
       buyer: user,
       items: products,
-      quantity:products.quantity,
       total: calculateTotal(),
       phone: contact.phone,
       address: contact.address,
@@ -225,9 +223,7 @@ const Cart = () => {
         history.push("/");
       });
   };
- 
 
- 
   return (
     <Container>
       <Announcement />
@@ -239,14 +235,11 @@ const Cart = () => {
           </Link>
           <TopTexts>
             <TopText>DETALLE</TopText>
-           
           </TopTexts>
-         
         </Top>
         <Bottom>
           <Info>
             {products.map((product) => (
-              
               <Product key={product.id} product={product}>
                 <ProductDetail>
                   <Image src={product.img} />
@@ -261,11 +254,9 @@ const Cart = () => {
 
                     <ProductId>
                       <b>Descripción:</b> {product.desc}
-          
                     </ProductId>
                     <ProductColor>
-                    <b>ID:</b> {product.id}
-          
+                      <b>ID:</b> {product.id}
                     </ProductColor>
                     <ProductSize>
                       <b>Talles: XL, L, M, S</b>
@@ -273,23 +264,23 @@ const Cart = () => {
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
-                <ButtonRemove onClick={() => deleteProduct(product.id)}>Eliminar</ButtonRemove>
+                  <ButtonRemove onClick={() => deleteProduct(product.id)}>
+                    Eliminar
+                  </ButtonRemove>
+
+                 
+
+
                   <ProductAmountContainer>
-              
-                  
                     <ProductAmount> {product.quantity} </ProductAmount>
-                    
-                
                   </ProductAmountContainer>
+
+                 
                   <ProductPrice>
                     $ {product.price * product.quantity}
-                    
-             
                   </ProductPrice>
-                
-            
-                  </PriceDetail>
-                
+          
+                </PriceDetail>
               </Product>
             ))}
             <Hr />
@@ -298,6 +289,7 @@ const Cart = () => {
             <SummaryTitle>Resumen de tu orden</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
+
               <div>
                 {products.length > 0 && !processingOrder && (
                   <h3> ${calculateTotal()}</h3>
@@ -306,8 +298,10 @@ const Cart = () => {
               <SummaryItemPrice> {calculateTotal}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText></SummaryItemText>
-              <SummaryItemPrice></SummaryItemPrice>
+              <SummaryItemText>
+                Para finalizar la compra debes iniciar sesion
+              </SummaryItemText>
+              
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText></SummaryItemText>
@@ -322,14 +316,10 @@ const Cart = () => {
               </SummaryItemText>
               <SummaryItemPrice> {calculateTotal}</SummaryItemPrice>
             </SummaryItem>
-            <div
-              
-            >
+            <div>
               <>
                 {!processingOrder && products.length > 0 && (
-                  <Button onClick={() => confirmOrder()}>
-                    CONFIRMAR COMPRA{" "}
-                  </Button>
+                  <Button onClick={() => confirmOrder()}>CONFIRMAR </Button>
                 )}
                 {!processingOrder && products.length > 0 && (
                   <Button onClick={() => emptyCart()}>CANCELAR </Button>
@@ -347,8 +337,8 @@ const Cart = () => {
                         onClick={() =>
                           setContact({ phone: "", address: "", comment: "" })
                         }
-                        className="Button"
-                        style={{ backgroundColor: "#e63946" }}
+                        type="button"
+                        className="btn btn-danger"
                       >
                         Borrar datos de contacto
                       </button>
@@ -365,13 +355,18 @@ const Cart = () => {
                     }
                     ref={contactFormRef}
                   >
+                  
                     <ContactForm
                       toggleVisibility={contactFormRef}
                       setContact={setContact}
                     />
                   </Togglable>
                 )}
-                {!processingOrder ?  <ItemList products={products.id} /> : "Procesando Orden"}
+                {!processingOrder ? (
+                  <ItemList products={products.id} />
+                ) : (
+                  "Procesando Orden"
+                )}
                 <> </>
               </>
             </div>

@@ -9,7 +9,7 @@ const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
     const [products, setProducts] = useLocalStorage("products", []);
-    const [quantity, setQuantity] =useState ()
+    const [quantity] =useState ()
     const [user, setUser] = useState(null);
   
 
